@@ -17,6 +17,9 @@ body {
 .carousel-cell {
     width: 100%;
     height: 100vh;
+
+    position: relative;
+  opacity: 1;
 }
 
 .carousel-cell img {
