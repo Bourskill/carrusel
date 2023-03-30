@@ -1,13 +1,31 @@
-var flkty = new Flickity('.carousel', {
-    // opciones generales
-    cellAlign: 'left',
-    contain: true,
-    wrapAround: true,
-    autoPlay: 4000, // cambia de imagen cada 4 segundos
-    pauseAutoPlayOnHover: true, // detiene el cambio de imagen cuando el mouse está encima del carrusel
+var elem = document.querySelector('.carousel');
+var flkty = new Flickity(elem, {
+  cellAlign: 'left',
+  contain: true,
+  wrapAround: true,
+  autoPlay: 4000,
+  fade: true,
+  lazyLoad: true,
+  adaptiveHeight: true,
+  on: {
+    ready: function() {
+      // Actualizar la opacidad de las imágenes al iniciar el carrusel
+      updateOpacity();
+    },
+    scroll: function() {
+      // Actualizar la opacidad de las imágenes al desplazarse
+      updateOpacity();
+    }
+  }
 });
 
-// reinicia el cambio de imagen cuando se termina de interactuar con el carrusel
-flkty.on('dragEnd', function () {
-    flkty.playPlayer();
-});
+// Función para actualizar la opacidad de las imágenes
+function updateOpacity() {
+  var cells = flkty.cells;
+  var scrollX = flkty.x;
+  cells.forEach(function(cell, i) {
+    var cellX = cell.target.getBoundingClientRect().left + scrollX;
+    var opacity = 1 - Math.abs(cellX) / window.innerWidth;
+    cell.element.style.opacity = opacity;
+  });
+}
