@@ -95,37 +95,6 @@
             flkty.playPlayer();
         });
 
-
-
-        const slider = document.querySelector('.carousel');
-
-        // obtener las imágenes del slider
-        const images = slider.querySelectorAll('.carousel-cell');
-
-        // obtener el índice de la imagen activa
-        function getActiveIndex() {
-            return flkty.selectedIndex;
-        }
-
-        // calcular la opacidad de cada imagen en función de su posición y ancho
-        function updateOpacity() {
-            images.forEach((image, index) => {
-                const rect = image.getBoundingClientRect();
-                const visibleWidth = Math.max(0, Math.min(rect.right, window.innerWidth) - Math.max(rect.left, 0));
-                const visiblePercent = visibleWidth / image.offsetWidth;
-                const opacity = index === getActiveIndex() ? 1 : visiblePercent * 0.8;
-
-                // actualizar la opacidad de la imagen
-                image.style.opacity = opacity;
-            });
-        }
-
-        // escuchar el evento 'change' de Flickity
-        slider.addEventListener('change', updateOpacity);
-
-        // escuchar el evento 'dragMove' de Flickity
-        slider.addEventListener('dragMove', updateOpacity);
-
     </script>
 </body>
 
