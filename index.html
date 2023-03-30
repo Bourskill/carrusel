@@ -79,6 +79,9 @@
                 alt="">
         </div>
     </div>
+    <div class="opacity-slider">
+        <input type="range" min="0" max="1" step="0.01" value="1">
+    </div>
 
     <script>
         var flkty = new Flickity('.carousel', {
@@ -93,6 +96,32 @@
         // reinicia el cambio de imagen cuando se termina de interactuar con el carrusel
         flkty.on('dragEnd', function () {
             flkty.playPlayer();
+        });
+
+
+
+
+        // Calcular la opacidad de las imágenes basado en la posición del usuario
+        flickity.on('scroll', function () {
+            var images = carousel.querySelectorAll('.carousel img');
+            var visibleWidth = window.innerWidth - carousel.getBoundingClientRect().left;
+            for (var i = 0; i < images.length; i++) {
+                var image = images[i];
+                var visiblePercent = Math.min(1, visibleWidth / image.width);
+                var opacity = visiblePercent.toFixed(2);
+                image.setAttribute('style', 'opacity: ' + opacity + ';');
+            }
+        });
+
+        // Ajustar la opacidad de las imágenes en función del control deslizante
+        var opacitySlider = document.querySelector('.opacity-slider input');
+        opacitySlider.addEventListener('input', function () {
+            var images = carousel.querySelectorAll('img');
+            var opacity = opacitySlider.value;
+            for (var i = 0; i < images.length; i++) {
+                var image = images[i];
+                image.setAttribute('style', 'opacity: ' + opacity + ';');
+            }
         });
 
     </script>
