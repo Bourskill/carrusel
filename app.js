@@ -31,6 +31,18 @@ flickity.on('scroll', function() {
   });
   
   
+
+  function handleCarousel() {
+    const images = document.querySelectorAll('.carousel img');
+
+    images.forEach(img => {
+        const boundingRect = img.getBoundingClientRect();
+        const percentVisible = boundingRect.x / window.innerWidth;
+
+        img.style.opacity = 1 - percentVisible;
+    });
+}
+
   
   
   
