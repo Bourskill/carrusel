@@ -1,5 +1,5 @@
 // mover todo el código de inicialización del carrusel fuera de la función window.onload
-var flkty = new Flickity('.carousel', {
+var flickity  = new Flickity('.carousel', {
     // opciones generales
     cellAlign: 'left',
     contain: true,
@@ -14,8 +14,9 @@ var flkty = new Flickity('.carousel', {
   });
   
   // Actualizar la opacidad de las imágenes en función de su posición en el carrusel
+// Actualizar la opacidad de las imágenes en función de su posición en el carrusel
 flickity.on('scroll', function() {
-    flickity.slides.forEach(function(slide) {
+    flickity.slides.forEach(function(slide, i) {
       var image = slide.cells[0].element;
       var imageWidth = image.offsetWidth;
       var slideWidth = flickity.slidesWidth;
@@ -26,10 +27,11 @@ flickity.on('scroll', function() {
       image.style.opacity = opacity;
     });
   });
+  
 
   
   // reinicia el cambio de imagen cuando se termina de interactuar con el carrusel
-  flkty.on('dragEnd', function () {
-    flkty.playPlayer();
+  flickity.on('dragEnd', function () {
+    flickity.playPlayer();
   });
   
