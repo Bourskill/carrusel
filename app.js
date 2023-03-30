@@ -1,3 +1,4 @@
+// mover todo el código de inicialización del carrusel fuera de la función window.onload
 var flkty = new Flickity('.carousel', {
     // opciones generales
     cellAlign: 'left',
@@ -8,19 +9,22 @@ var flkty = new Flickity('.carousel', {
     fade: true,
     adaptiveHeight: true,
     lazyLoad: true,
-    setGallerySize: false,
-    // función que se ejecuta al desplazarse por el carrusel
-    on: {
-      scroll: () => {
-        const visibleImage = flkty.slides[flkty.selectedIndex].querySelector('img');
-        const visibleHeight = visibleImage.offsetHeight;
-        const galleryHeight = flkty.viewportHeight;
+    setGallerySize: false
+  });
   
-        const opacity = 1 - (galleryHeight - visibleHeight) / galleryHeight;
-        visibleImage.style.opacity = opacity;
-      }
+  flkty.on('scroll', () => {
+    const visibleSlide = flkty.getSelectedElement();
+    const visibleImage = visibleSlide.querySelector('img');
+    if (visibleImage) {
+      const visibleHeight = visibleImage.offsetHeight;
+      const galleryHeight = flkty.viewportHeight;
+  
+      const opacity = 1 - (galleryHeight - visibleHeight) / galleryHeight;
+      visibleImage.style.opacity = opacity;
     }
   });
+  
+
   
   // reinicia el cambio de imagen cuando se termina de interactuar con el carrusel
   flkty.on('dragEnd', function () {
