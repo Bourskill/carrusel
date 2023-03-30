@@ -45,15 +45,19 @@
         }
 
         .carousel-cell {
-            width: 100vw;
-            height: 100vh;
-        }
-
-
-        .carousel-cell img {
             width: 100%;
             height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-cell img {
+            max-width: 100%;
+            max-height: 100%;
             object-fit: cover;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
         }
     </style>
 
@@ -79,50 +83,57 @@
                 alt="">
         </div>
     </div>
-    <div class="opacity-slider">
-        <input type="range" min="0" max="1" step="0.01" value="1">
-    </div>
+    <input type="range" id="opacity-slider" min="0" max="100" value="100">
 
     <script>
+        // Inicializa Flickity
         var flkty = new Flickity('.carousel', {
-            // opciones generales
-            cellAlign: 'left',
-            contain: true,
             wrapAround: true,
-            autoPlay: 4000, // cambia de imagen cada 3 segundos
-            pauseAutoPlayOnHover: true, // detiene el cambio de imagen cuando el mouse está encima del carrusel
+            cellAlign: 'left',
+            imagesLoaded: true,
+            lazyLoad: 2,
+            setGallerySize: false,
+            opacity: true,
+            opacityPercentPosition: true
         });
 
-        // reinicia el cambio de imagen cuando se termina de interactuar con el carrusel
-        flkty.on('dragEnd', function () {
-            flkty.playPlayer();
-        });
+        // Obtiene el control deslizante
+        var slider = document.getElementById('opacity-slider');
 
-        // Calcular la opacidad de las imágenes en función de la posición del usuario
-        document.addEventListener('scroll', function () {
-            var slides = flkty.slides;
-            var viewportWidth = window.innerWidth;
-
-            for (var i = 0; i < slides.length; i++) {
-                var slide = slides[i].getElement();
-                var slideRect = slide.getBoundingClientRect();
-                var visibleWidth = Math.min(slideRect.right, viewportWidth) - Math.max(slideRect.left, 0);
-                var opacity = visibleWidth / slideRect.width;
-
-                slide.style.opacity = opacity;
-            }
-        });
-
-        // Controlar la opacidad de las imágenes mediante la interacción del usuario con el slider
-        var opacitySlider = document.querySelector('.opacity-slider');
-
-        opacitySlider.addEventListener('change', function () {
-            var opacity = opacitySlider.value / 100;
-
+        // Actualiza la opacidad de las imágenes en función del valor del control deslizante
+        slider.addEventListener('change', function () {
+            var opacity = slider.value / 100;
             flkty.slides.forEach(function (slide) {
-                slide.setOpacity(opacity);
+                slide.cells.forEach(function (cell) {
+                    cell.element.querySelector('img').style.opacity = opacity;
+                });
             });
         });
+
+        // Actualiza la opacidad de las imágenes en tiempo real mientras el usuario arrastra el control deslizante
+        slider.addEventListener('input', function () {
+            var opacity = slider.value / 100;
+            flkty.slides.forEach(function (slide) {
+                slide.cells.forEach(function (cell) {
+                    cell.element.querySelector('img').style.opacity = opacity;
+                });
+            });
+        });
+
+        // Actualiza la opacidad de las imágenes en función del movimiento del usuario en el carrusel
+        flkty.on('dragMove', function () {
+            flkty.slides.forEach(function (slide) {
+                slide.cells.forEach(function (cell) {
+                    var cellWidth = cell.element.offsetWidth;
+                    var cellLeft = cell.element.getBoundingClientRect().left;
+                    var cellRight = cellLeft + cellWidth;
+                    var carouselWidth = flkty.element.offsetWidth;
+                    var opacity = 1 - ((carouselWidth - cellRight) / carouselWidth);
+                    cell.element.querySelector('img').style.opacity = opacity;
+                });
+            });
+        });
+
 
     </script>
 </body>
