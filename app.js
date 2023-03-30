@@ -18,14 +18,16 @@ var flkty = new Flickity(elem, {
     }
   }
 });
-
-// Función para actualizar la opacidad de las imágenes
 function updateOpacity() {
-  var cells = flkty.cells;
-  var scrollX = flkty.x;
-  cells.forEach(function(cell, i) {
-    var cellX = cell.target.getBoundingClientRect().left + scrollX;
-    var opacity = 1 - Math.abs(cellX) / window.innerWidth;
-    cell.element.style.opacity = opacity;
-  });
-}
+    if (typeof flkty !== 'undefined') {
+      // actualizar la opacidad de las celdas del carrusel
+      var cells = flkty.cells;
+      var scrollX = flkty.x;
+      cells.forEach(function(cell, i) {
+        var cellX = cell.target.getBoundingClientRect().left + scrollX;
+        var opacity = 1 - Math.abs(cellX) / window.innerWidth;
+        cell.element.style.opacity = opacity;
+      });
+    }
+  }
+  
