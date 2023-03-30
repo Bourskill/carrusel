@@ -17,7 +17,7 @@ var flickity  = new Flickity('.carousel', {
   
  
 // Actualizar la opacidad de las imágenes en función de su posición en el carrusel
-flickity.on('scroll', function() {
+flickity.on('pointerMove', function() {
     flickity.slides.forEach(function(slide, i) {
       var image = slide.cells[0].element.querySelector('img');
       var imageWidth = image.offsetWidth;
