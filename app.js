@@ -43,6 +43,18 @@ flickity.on('scroll', function() {
     });
 }
 
+function preloadImages() {
+    const images = document.querySelectorAll('.carousel img');
+    images.forEach(img => {
+      const src = img.getAttribute('src');
+      const imgElement = new Image();
+      imgElement.src = src;
+    });
+  }
+  
+  preloadImages();
+  
+
   
   
   
