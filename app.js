@@ -18,16 +18,18 @@ var flkty = new Flickity(elem, {
     }
   }
 });
+
+
 function updateOpacity() {
-    if (typeof flkty !== 'undefined') {
-      // actualizar la opacidad de las celdas del carrusel
-      var cells = flkty.cells;
-      var scrollX = flkty.x;
-      cells.forEach(function(cell, i) {
-        var cellX = cell.target.getBoundingClientRect().left + scrollX;
-        var opacity = 1 - Math.abs(cellX) / window.innerWidth;
+    if (cells) {
+      cells.forEach(function (cell) {
+        var cellRect = cell.element.getBoundingClientRect();
+        var isVisible = cellRect.right > 0 && cellRect.left < window.innerWidth;
+        var opacity = isVisible ? 1 : 0;
         cell.element.style.opacity = opacity;
       });
     }
   }
+  
+  
   
