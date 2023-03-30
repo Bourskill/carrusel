@@ -13,11 +13,13 @@ var flickity  = new Flickity('.carousel', {
     opacity: true
   });
   
+
+  
   // Actualizar la opacidad de las imágenes en función de su posición en el carrusel
 // Actualizar la opacidad de las imágenes en función de su posición en el carrusel
 flickity.on('scroll', function() {
     flickity.slides.forEach(function(slide, i) {
-      var image = slide.cells[0].element;
+      var image = slide.cells[0].element.querySelector('img');
       var imageWidth = image.offsetWidth;
       var slideWidth = flickity.slidesWidth;
       var slidePosition = slide.target + flickity.x;
@@ -27,6 +29,10 @@ flickity.on('scroll', function() {
       image.style.opacity = opacity;
     });
   });
+  
+  
+  
+  
   
 
   
