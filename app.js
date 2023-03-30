@@ -15,7 +15,7 @@ var flickity  = new Flickity('.carousel', {
   
 
   
-  // Actualizar la opacidad de las imágenes en función de su posición en el carrusel
+ 
 // Actualizar la opacidad de las imágenes en función de su posición en el carrusel
 flickity.on('scroll', function() {
     flickity.slides.forEach(function(slide, i) {
