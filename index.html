@@ -79,10 +79,10 @@
                 alt="">
         </div>
     </div>
-    <input type="range" id="opacity-slider" min="0" max="100" value="100">
 
     <script>
-     var flkty = new Flickity('.carousel', {
+        var carousel = document.querySelector('.carousel');
+        var flkty = new Flickity('.carousel', {
             // opciones generales
             cellAlign: 'left',
             contain: true,
@@ -95,6 +95,8 @@
         flkty.on('dragEnd', function () {
             flkty.playPlayer();
         });
+
+
 
 
 
