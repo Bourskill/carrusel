@@ -16,7 +16,7 @@ body {
 }
 
 .carousel-cell:active img {
-   transform: scale(1.03);
+    transform: scale(1.03);
 }
 
 .carousel-cell img {
@@ -28,3 +28,5 @@ body {
 }
 
 
+
+  
