@@ -1,9 +1,4 @@
 body {
-    font-family: sans-serif;
-}
-
-/* prevent vertical scroll bar glitch */
-body {
     overflow: hidden;
     background-color: black;
 }
@@ -29,7 +24,7 @@ body {
     height: 100%;
     object-fit: cover;
 
-    transition: transform .2s ease-in-out;
+    transition: transform .4s ease-in-out;
 }
 
 

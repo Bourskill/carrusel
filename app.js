@@ -10,20 +10,21 @@ const flickity = new Flickity('.carousel', {
   adaptiveHeight: true,
   lazyLoad: true,
   setGallerySize: false,
-  opacity: true
+  opacity: true,
+  selectedAttraction: 0.04
 });
-
+  
 function updateImageOpacity() {
   flickity.slides.forEach(function(slide, i) {
     const container = slide.cells[0].element;
     const imageWidth = container.querySelector('img').offsetWidth;
-    const slideWidth = flickity.slidesWidth;
-    const slidePosition = slide.target + flickity.x;
-    const opacity = 1 - Math.abs(slidePosition) / (slideWidth / 2);
+    const containerRect = container.getBoundingClientRect();
+    const opacity = 1 - Math.abs(containerRect.x) / window.innerWidth;
 
     container.style.opacity = Math.max(0, Math.min(1, opacity));
   });
 }
+
 
 function preloadImages() {
   images.forEach(function(image) {
