@@ -5,7 +5,7 @@ window.addEventListener('load', function () {
     setTimeout(() => {
       preloaderContainer.style.display = 'none';
     }, 1000);
-  }, 2000);
+  }, 1000);
 });
 
 
@@ -14,66 +14,53 @@ window.addEventListener('load', function () {
 //////////////////////////////////////// CARRUSEL
 
 
-
-
-
-const images = document.querySelectorAll('.carousel img');
-const containers = document.querySelectorAll('.carousel .container-cell');
 const flickity = new Flickity('.carousel', {
   cellAlign: 'left',
   contain: true,
   wrapAround: true,
-  autoPlay: 4000,
+  autoPlay: 6000,
   pauseAutoPlayOnHover: true,
   fade: true,
   adaptiveHeight: true,
   lazyLoad: true,
   setGallerySize: false,
-  opacity: true,
-  selectedAttraction: 0.04
+  selectedAttraction: 0.03,
+  imagesLoaded: true,
+  percentPosition: false
 });
 
-function updateImageOpacity() {
+const innerWidth = window.innerWidth;
+const parallaxFactor = 0.4;
+
+function updateCarousel() {
   flickity.slides.forEach(function (slide, i) {
     const container = slide.cells[0].element;
-    const imageWidth = container.querySelector('img').offsetWidth;
     const containerRect = container.getBoundingClientRect();
-    const opacity = 1 - Math.abs(containerRect.x) / window.innerWidth;
+    const opacity = 1 - Math.abs(containerRect.x) / innerWidth;
+    const image = container.querySelector('img');
+    const parallax = -containerRect.x * parallaxFactor;
 
     container.style.opacity = Math.max(0, Math.min(1, opacity));
+    image.style.transform = 'translateX(' + parallax + 'px)';
   });
 }
 
+flickity.on('scroll', updateCarousel);
 
-function preloadImages() {
-  images.forEach(function (image) {
-    const src = image.getAttribute('src');
-    const imgElement = new Image();
-    imgElement.src = src;
-  });
-}
-
-function updateContainerOpacity() {
-  containers.forEach(function (container) {
-    const boundingRect = container.getBoundingClientRect();
-    const percentVisible = boundingRect.x / window.innerWidth;
-    container.style.opacity = 1 - percentVisible;
-  });
-}
-
-flickity.on('scroll', updateImageOpacity);
 flickity.on('dragEnd', function () {
   flickity.playPlayer();
 });
 
-window.addEventListener('load', function () {
-  preloadImages();
-  updateContainerOpacity();
+window.addEventListener('resize', function () {
+  innerWidth = window.innerWidth;
+  updateCarousel();
 });
 
-window.addEventListener('resize', function () {
-  updateContainerOpacity();
-});
+
+
+
+
+
 
 
 
