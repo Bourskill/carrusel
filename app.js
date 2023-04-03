@@ -14,6 +14,9 @@ window.addEventListener('load', function () {
 //////////////////////////////////////// CARRUSEL
 
 
+
+
+
 const flickity = new Flickity('.carousel', {
   cellAlign: 'left',
   contain: true,
@@ -29,10 +32,11 @@ const flickity = new Flickity('.carousel', {
   percentPosition: false
 });
 
-const innerWidth = window.innerWidth;
+let innerWidth = window.innerWidth;
 const parallaxFactor = 0.6;
 
 function updateCarousel() {
+  innerWidth = window.innerWidth;
   flickity.slides.forEach(function (slide, i) {
     const container = slide.cells[0].element;
     const containerRect = container.getBoundingClientRect();
@@ -45,19 +49,56 @@ function updateCarousel() {
   });
 }
 
+function handleResize() {
+  debounce(function() {
+    window.requestAnimationFrame(updateCarousel);
+    flickity.reloadCells();
+  }, 250)();
+}
+
+function debounce(func, wait) {
+  let timeout;
+  return function() {
+    const context = this,
+      args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      timeout = null;
+      func.apply(context, args);
+    }, wait);
+  };
+}
+
 flickity.on('scroll', updateCarousel);
 
 flickity.on('dragEnd', function () {
   flickity.playPlayer();
 });
 
-window.addEventListener('resize', function () {
-  innerWidth = window.innerWidth;
-  updateCarousel();
+window.addEventListener('resize', handleResize);
+
+
+
+
+//////////////////////////////////////// NAVBAR
+
+
+
+
+const header = document.querySelector("header");
+const toggleBtns = document.querySelectorAll(".toggle-btn");
+
+toggleBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    setTimeout(() => {
+      header.classList.toggle("holi");
+    }, 250);
+    header.style.animation = "none";
+    setTimeout(() => {
+      header.style.animation = "nav .5s ease 1 forwards";
+    }, 100);
+  });
 });
-
-
-
 
 
 
