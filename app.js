@@ -89,7 +89,7 @@ const header = document.querySelector("header");
 const toggleBtns = document.querySelectorAll(".toggle-btn");
 
 toggleBtns.forEach(btn => {
-  btn.addEventListener("click", () => {
+  btn.addEventListener("click touchstart", () => {
     setTimeout(() => {
       header.classList.toggle("holi");
     }, 250);
