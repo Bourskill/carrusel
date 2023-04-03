@@ -26,7 +26,8 @@ body {
 .carousel-cell img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
 
     display: block;
     will-change: transform;
@@ -189,6 +190,20 @@ header>i {
 
 .holi .menu-items i {
     display: none;
+}
+
+@-webkit-keyframes nav {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 @keyframes nav {

@@ -89,16 +89,21 @@ const header = document.querySelector("header");
 const toggleBtns = document.querySelectorAll(".toggle-btn");
 
 toggleBtns.forEach(btn => {
-  btn.addEventListener("click touchstart", () => {
+  btn.addEventListener("click", () => {
     setTimeout(() => {
       header.classList.toggle("holi");
-    }, 250);
+    }, 500);
+
     header.style.animation = "none";
+    header.style.webkitAnimation = "none"; //Prefijo de navegador para Safari y otros navegadores basados en Webkit
+
     setTimeout(() => {
-      header.style.animation = "nav .5s ease 1 forwards";
+      header.style.animation = "nav 1s ease 1 forwards";
+      header.style.webkitAnimation = "nav 1s ease 1 forwards"; //Prefijo de navegador para Safari y otros navegadores basados en Webkit
     }, 100);
   });
 });
+
 
 
 
