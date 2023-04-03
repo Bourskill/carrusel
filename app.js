@@ -24,13 +24,13 @@ const flickity = new Flickity('.carousel', {
   adaptiveHeight: true,
   lazyLoad: true,
   setGallerySize: false,
-  selectedAttraction: 0.03,
+  selectedAttraction: 0.015,
   imagesLoaded: true,
   percentPosition: false
 });
 
 const innerWidth = window.innerWidth;
-const parallaxFactor = 0.4;
+const parallaxFactor = 0.6;
 
 function updateCarousel() {
   flickity.slides.forEach(function (slide, i) {
